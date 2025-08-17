@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+import ClubCard from "../components/club-card.astro";
+
+// NEW ⬇️ load real clubs from filesystem
+import { getClubs } from "../lib/clubs";
+import SiteHeader from "../components/site-header.astro";
+const clubs = await getClubs();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GVHS Clubs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+  </head>
+
+  <body class="min-h-screen bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <SiteHeader title="GVHS Clubs" />
+
+    <!-- Main -->
+    <main class="mx-auto max-w-7xl px-4 py-8">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+      >
+        {
+          clubs.map((c) => (
+            <ClubCard
+              href={`${import.meta.env.BASE_URL}/clubs/${c.slug}`}
+              title={c.name}
+              short={c.short}
+              coverSrc={c.coverUrl}
+            />
+          ))
+        }
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-200">
+      <div class="mx-auto max-w-7xl px-4 py-6 text-sm text-gray-600">
+        © {new Date().getFullYear()} GVHS Students
+      </div>
+    </footer>
+  </body>
+</html>

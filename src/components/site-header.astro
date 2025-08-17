@@ -1,0 +1,21 @@
+---
+/**
+ * Reusable site header
+ * Props:
+ * - title?: string  (center title; defaults to "GVHS Clubs")
+ */
+interface Props {
+  title?: string;
+}
+const { title = "GVHS Clubs" } = Astro.props as Props;
+const base = import.meta.env.BASE_URL || "/";
+---
+
+<header class="sticky top-0 z-10 bg-blue-900 text-gray-50 backdrop-blur">
+  <div class="px-8 py-4 flex items-center justify-between">
+    <h1 class="text-xl font-semibold tracking-tight">GVHS Clubs</h1>
+    <nav class="text-sm">
+      <a href={import.meta.env.BASE_URL} ...>Home</a>
+    </nav>
+  </div>
+</header>

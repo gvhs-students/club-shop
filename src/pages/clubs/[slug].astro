@@ -1,0 +1,255 @@
+---
+/**
+ * src/pages/clubs/[slug].astro
+ * Linear layout: cover → name → short → meetings → Markdown → (carousel) → contacts
+ */
+import "../../styles/global.css";
+import { getClubs, getClubBySlug } from "../../lib/clubs";
+import SiteHeader from "../../components/site-header.astro";
+
+export async function getStaticPaths() {
+  const clubs = await getClubs();
+  return clubs.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+if (!slug) throw new Error("Missing slug");
+
+const club = await getClubBySlug(slug);
+if (!club) {
+  throw new Error(`Club not found for slug: ${slug}`);
+}
+
+const Md = club.mdComponent;
+
+// helpers (format days/time)
+function fmtDays(days?: string[]) {
+  if (!days || days.length === 0) return "";
+  return days.map((d) => d.slice(0, 3)).join("/");
+}
+function fmtTime(hhmm?: string) {
+  if (!hhmm) return "";
+  const [h, m] = hhmm.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const hr12 = ((h + 11) % 12) + 1;
+  return `${hr12}:${String(m).padStart(2, "0")} ${ampm}`;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{club.name} • GVHS Clubs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+  </head>
+
+  <body class="min-h-screen bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <SiteHeader />
+
+    <!-- Main (one-column flow) -->
+    <main class="mx-auto max-w-3xl px-4 py-8 space-y-8">
+      <!-- 1) Cover -->
+      <div class="relative overflow-hidden rounded-2xl bg-gray-200 ring-1 ring-black/5">
+        <img
+          src={club.coverUrl}
+          alt={`${club.name} cover`}
+          class="h-auto w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- 2) Name -->
+      <h1 class="text-2xl font-semibold tracking-tight">{club.name}</h1>
+
+      <!-- 3) Short description -->
+      {club.short && <p class="text-base text-gray-700">{club.short}</p>}
+
+      <!-- 4) Meeting info -->
+      {club.meetings?.length && (
+        <section class="space-y-2">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-700">Meetings</h2>
+          <ul class="space-y-1 text-sm text-gray-800">
+            {club.meetings.map((m) => (
+              <li>
+                <span class="font-medium">{fmtDays(m.days)}</span>
+                {m.start && <> · {fmtTime(m.start)}</>}
+                {m.end && <> – {fmtTime(m.end)}</>}
+                {m.room && <> · {m.room}</>}
+                {m.frequency && <span class="text-gray-500"> · {m.frequency}</span>}
+                {m.note && <div class="text-gray-600">{m.note}</div>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- 5) Markdown body -->
+      <section class="prose prose-sm sm:prose-base max-w-none">
+        <Md />
+      </section>
+
+      <!-- 6) Gallery (carousel). Rules:
+             - 0 images: hidden
+             - 1 image: show image only (no arrows)
+             - 2+ images: show arrows; wrap from last→first and first→last
+      -->
+      {club.galleryUrls.length > 0 && (
+        <section>
+          <div
+            class="relative overflow-hidden rounded-xl ring-1 ring-black/5"
+            data-carousel
+            data-count={club.galleryUrls.length}
+          >
+            <!-- Image rail -->
+            <div class="w-full relative">
+              {club.galleryUrls.length === 1 ? (
+                <img
+                  src={club.galleryUrls[0]}
+                  alt={`${club.name} image`}
+                  class="block w-full h-auto object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="relative">
+                  {club.galleryUrls.map((src, i) => (
+                    <img
+                      src={src}
+                      alt={`${club.name} image ${i + 1}`}
+                      class={`block w-full h-auto object-cover ${i === 0 ? "" : "hidden"}`}
+                      data-carousel-slide={i}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ))}
+
+                  <!-- Prev / Next arrows (only when >1) -->
+                  <button
+                    type="button"
+                    class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 backdrop-blur px-3 py-2 text-sm ring-1 ring-gray-300 hover:bg-white"
+                    data-carousel-prev
+                    aria-label="Previous image"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 backdrop-blur px-3 py-2 text-sm ring-1 ring-gray-300 hover:bg-white"
+                    data-carousel-next
+                    aria-label="Next image"
+                  >
+                    ›
+                  </button>
+
+                  <!-- Dots -->
+                  <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {club.galleryUrls.map((_, i) => (
+                      <span
+                        class={`h-1.5 w-1.5 rounded-full bg-white/60 ring-1 ring-black/10 ${i === 0 ? "opacity-100" : "opacity-60"}`}
+                        data-carousel-dot={i}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- 7) Contacts -->
+      {club.contacts && (
+        <section class="space-y-3">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-700">Contacts</h2>
+
+          {club.contacts.club && (
+            <ul class="text-sm text-gray-800 space-y-1">
+              {club.contacts.club.email && (
+                <li>Email: <a class="underline" href={`mailto:${club.contacts.club.email}`}>{club.contacts.club.email}</a></li>
+              )}
+              {club.contacts.club.discord && (
+                <li>Discord: <a class="underline" href={club.contacts.club.discord}>Join</a></li>
+              )}
+              {club.contacts.club.instagram && (
+                <li>Instagram: <a class="underline" href={`https://instagram.com/${club.contacts.club.instagram.replace(/^@/, "")}`}>@{club.contacts.club.instagram.replace(/^@/, "")}</a></li>
+              )}
+              {club.contacts.club.website && (
+                <li>Website: <a class="underline" href={club.contacts.club.website}>{club.contacts.club.website}</a></li>
+              )}
+            </ul>
+          )}
+
+          {club.contacts.advisors?.length && (
+            <div>
+              <div class="text-sm font-medium mb-1">Advisors</div>
+              <ul class="text-sm text-gray-800 space-y-1">
+                {club.contacts.advisors.map((p) => (
+                  <li>
+                    {p.name}{p.role && ` — ${p.role}`}
+                    {p.email && <> · <a class="underline" href={`mailto:${p.email}`}>{p.email}</a></>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {club.contacts.officers?.length && (
+            <div>
+              <div class="text-sm font-medium mb-1">Officers</div>
+              <ul class="text-sm text-gray-800 space-y-1">
+                {club.contacts.officers.map((p) => (
+                  <li>
+                    {p.name}{p.role && ` — ${p.role}`}
+                    {p.email && <> · <a class="underline" href={`mailto:${p.email}`}>{p.email}</a></>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-200">
+      <div class="mx-auto max-w-3xl px-4 py-6 text-sm text-gray-600">
+        © {new Date().getFullYear()} GVHS Students
+      </div>
+    </footer>
+
+    <!-- Minimal client-side carousel logic (no framework). Loaded only if gallery > 1 -->
+    {club.galleryUrls.length > 1 && (
+      <script is:inline>
+        (function () {
+          const root = document.querySelector('[data-carousel]');
+          if (!root) return;
+          const count = Number(root.getAttribute('data-count') || '0');
+          if (count < 2) return;
+
+          let idx = 0;
+          const slides = root.querySelectorAll('[data-carousel-slide]');
+          const dots = root.querySelectorAll('[data-carousel-dot]');
+
+          function show(i) {
+            idx = (i + slides.length) % slides.length; // wrap
+            slides.forEach((el, n) => el.classList.toggle('hidden', n !== idx));
+            dots.forEach((d, n) => d.classList.toggle('opacity-100', n === idx));
+            dots.forEach((d, n) => d.classList.toggle('opacity-60', n !== idx));
+          }
+
+          root.querySelector('[data-carousel-prev]')?.addEventListener('click', () => {
+            show(idx - 1);
+          });
+          root.querySelector('[data-carousel-next]')?.addEventListener('click', () => {
+            show(idx + 1);
+          });
+
+          dots.forEach((dot, n) => dot.addEventListener('click', () => show(n)));
+        })();
+      </script>
+    )}
+  </body>
+</html>
