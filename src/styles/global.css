@@ -1,1 +1,101 @@
+/* src/styles/global.css */
 @import "tailwindcss";
+
+/* Markdown defaults without @apply */
+.md {
+  max-width: none;
+  color: #111827; /* text-gray-900 */
+}
+
+/* Paragraphs & lists */
+.md p { margin: 1rem 0; line-height: 1.75rem; }
+.md ul { margin: 1rem 0; padding-left: 1.5rem; list-style: disc; }
+.md ol { margin: 1rem 0; padding-left: 1.5rem; list-style: decimal; }
+.md li { margin: 0.25rem 0; }
+
+/* Links */
+.md a {
+  color: #2563eb;               /* blue-600 */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.md a:hover { color: #1d4ed8; } /* blue-700 */
+
+/* Headings */
+.md h1 { margin: 1.5rem 0 1rem; font-weight: 700; font-size: 1.875rem; line-height: 2.25rem; }
+.md h2 { margin: 1.5rem 0 0.75rem; font-weight: 700; font-size: 1.5rem;   line-height: 2rem; }
+.md h3 { margin: 1.25rem 0 0.5rem; font-weight: 600; font-size: 1.25rem;  line-height: 1.75rem; }
+.md h4 { margin: 1rem 0 0.5rem;   font-weight: 600; font-size: 1.125rem;  line-height: 1.5rem; }
+
+/* Blockquotes */
+.md blockquote {
+  margin: 1.5rem 0;
+  border-left: 4px solid #e5e7eb; /* gray-200 */
+  padding-left: 1rem;
+  color: #374151;                 /* gray-700 */
+  font-style: italic;
+}
+
+/* Inline code */
+.md :not(pre) > code {
+  background: #f1f5f9;           /* slate-100 */
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Code blocks */
+.md pre {
+  margin: 1rem 0;
+  overflow-x: auto;
+  background: #0b1020;
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.md pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Images */
+.md img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+
+/* Tables */
+.md table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  text-align: left;
+  font-size: 0.875rem;
+}
+.md thead th {
+  background: #f8fafc;           /* slate-50 */
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+}
+.md tbody td {
+  border-bottom: 1px solid #f1f5f9; /* slate-100 */
+  padding: 0.5rem 0.75rem;
+}
+
+/* Horizontal rule */
+.md hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+}

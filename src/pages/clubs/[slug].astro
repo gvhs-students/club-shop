@@ -87,9 +87,11 @@ function fmtTime(hhmm?: string) {
       )}
 
       <!-- 5) Markdown body -->
-      <section class="prose prose-sm sm:prose-base max-w-none">
-        <Md />
-      </section>
+
+<section class="md max-w-none">
+  <Md />
+</section>
+
 
       <!-- 6) Gallery (carousel). Rules:
              - 0 images: hidden
@@ -168,16 +170,16 @@ function fmtTime(hhmm?: string) {
           {club.contacts.club && (
             <ul class="text-sm text-gray-800 space-y-1">
               {club.contacts.club.email && (
-                <li>Email: <a class="underline" href={`mailto:${club.contacts.club.email}`}>{club.contacts.club.email}</a></li>
+                <li>Email: <a class="underline" href={`mailto:${club.contacts.club.email}`} target="_blank" rel="noopener noreferrer">{club.contacts.club.email}</a></li>
               )}
               {club.contacts.club.discord && (
-                <li>Discord: <a class="underline" href={club.contacts.club.discord}>Join</a></li>
+                <li>Discord: <a class="underline" href={club.contacts.club.discord} target="_blank" rel="noopener noreferrer">Join</a></li>
               )}
               {club.contacts.club.instagram && (
-                <li>Instagram: <a class="underline" href={`https://instagram.com/${club.contacts.club.instagram.replace(/^@/, "")}`}>@{club.contacts.club.instagram.replace(/^@/, "")}</a></li>
+                <li>Instagram: <a class="underline" href={`https://instagram.com/${club.contacts.club.instagram.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">@{club.contacts.club.instagram.replace(/^@/, "")}</a></li>
               )}
               {club.contacts.club.website && (
-                <li>Website: <a class="underline" href={club.contacts.club.website}>{club.contacts.club.website}</a></li>
+                <li>Website: <a class="underline" href={club.contacts.club.website} target="_blank" rel="noopener noreferrer">{club.contacts.club.website}</a></li>
               )}
             </ul>
           )}

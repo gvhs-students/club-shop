@@ -11,7 +11,7 @@ meetings:
 contacts:
   club:
     email: "csclub@gvhs.org"
-    discord: "https://discord.gg/example"
+    instagram: "@example"
     website: "https://gvhscs.club"
   advisors:
     - name: "Ms. Park"
@@ -23,6 +23,11 @@ categories: ["STEM", "Programming", "Hackathons"]
 ---
 
 We explore **programming**, from web to AI. Bring your laptop and ideas.
+
+# 1
+## 2
+### 3
+#### 4
 
 - Coding challenges
 - Project showcases

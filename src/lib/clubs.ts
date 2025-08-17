@@ -82,16 +82,10 @@ export type ClubFullData = ClubCardData & {
 
 // -------------------- Globs (built-time asset discovery) --------------------
 
-// 1) Markdown: frontmatter + default component
+// 1) Markdown files (frontmatter + compiled Content component)
 const mdModules = import.meta.glob("../clubs/*/index.md", {
   eager: true,
-}) as Record<
-  string,
-  {
-    frontmatter: Frontmatter;
-    default: any;
-  }
->;
+}) as Record<string, { frontmatter: Frontmatter; Content: any; default?: any }>;
 
 const coverImages = import.meta.glob(
   "../clubs/*/images/cover.{jpg,jpeg,png,webp}",
@@ -219,7 +213,7 @@ export async function getClubBySlug(
     coverUrl: resolveCoverUrl(slug, fm),
     meetings: fm.meetings,
     contacts: fm.contacts,
-    mdComponent: mod.default,
+    mdComponent: (mod as any).Content ?? (mod as any).default,
     galleryUrls: resolveGalleryUrls(slug, fm),
     docUrls: resolveDocUrls(slug),
   };
