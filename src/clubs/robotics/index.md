@@ -1,6 +1,6 @@
 ---
 name: "Robotics Club"
-short: "Build, code, and compete in robotics challenges."
+short: "Student-led teams that designs, builds, and programs robots to compete in the annual VEX V5 competitions, while teaching members hands-on engineering and coding skills."
 cover: "./cover.jpg"
 meetings:
   - days: ["Wed"]
