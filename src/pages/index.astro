@@ -1,11 +1,12 @@
 ---
 import "../styles/global.css";
-import ClubCard from "../components/club-card.astro";
-
-// NEW ⬇️ load real clubs from filesystem
-import { getClubs } from "../lib/clubs";
 import SiteHeader from "../components/site-header.astro";
+import ClubCard from "../components/club-card.astro";
+import { getClubs, getSearchIndex } from "../lib/clubs";
+
 const clubs = await getClubs();
+const searchIndex = await getSearchIndex();
+const searchBySlug = new Map(searchIndex.map((i) => [i.slug, i.text]));
 ---
 
 <html lang="en">
@@ -22,17 +23,37 @@ const clubs = await getClubs();
 
     <!-- Main -->
     <main class="mx-auto max-w-7xl px-4 py-8">
+      <!-- Search -->
+      <div class="mb-6">
+        <label for="club-search" class="sr-only">Search clubs</label>
+        <input
+          id="club-search"
+          type="search"
+          placeholder="Search by name, category, or description..."
+          class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <!-- Cards -->
       <div
+        id="club-grid"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
       >
         {
           clubs.map((c) => (
-            <ClubCard
-              href={`${import.meta.env.BASE_URL}/clubs/${c.slug}`}
-              title={c.name}
-              short={c.short}
-              coverSrc={c.coverUrl}
-            />
+            <div
+              class="group/card"
+              data-slug={c.slug}
+              data-search={searchBySlug.get(c.slug) ?? ""}
+            >
+              <ClubCard
+                href={`${import.meta.env.BASE_URL}/clubs/${c.slug}`}
+                title={c.name}
+                short={c.short}
+                coverSrc={c.coverUrl}
+                categories={c.categories}
+              />
+            </div>
           ))
         }
       </div>
@@ -41,11 +62,33 @@ const clubs = await getClubs();
     <!-- Footer -->
     <footer class="mt-12 border-t border-gray-200">
       <div
-        class="mx-auto justify-cente text-center max-w-7xl px-4 py-6 text-sm text-gray-600"
+        class="mx-auto text-center max-w-7xl px-4 py-6 text-sm text-gray-600"
       >
-        © {new Date().getFullYear()} GVHS Students · Independent Student Initative
+        © {new Date().getFullYear()} GVHS Students · Independent Student Initiative
         · Developed by Vlarkus
       </div>
     </footer>
+
+    <!-- Client-side filter -->
+    <script is:inline>
+      (() => {
+        const input = document.getElementById("club-search");
+        const grid = document.getElementById("club-grid");
+        if (!input || !grid) return;
+
+        const items = Array.from(grid.querySelectorAll("[data-search]"));
+
+        function applyFilter(q) {
+          const query = (q || "").trim().toLowerCase();
+          items.forEach((el) => {
+            const hay = el.getAttribute("data-search") || "";
+            const show = query === "" || hay.includes(query);
+            el.style.display = show ? "" : "none";
+          });
+        }
+
+        input.addEventListener("input", (e) => applyFilter(e.target.value));
+      })();
+    </script>
   </body>
 </html>

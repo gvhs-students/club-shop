@@ -99,3 +99,7 @@
   border: 0;
   border-top: 1px solid #e5e7eb; /* gray-200 */
 }
+
+nav a:hover {
+  text-decoration: underline;
+}

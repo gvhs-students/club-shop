@@ -62,10 +62,22 @@ function fmtTime(hhmm?: string) {
       </div>
 
       <!-- 2) Name -->
-      <h1 class="text-2xl font-semibold tracking-tight">{club.name}</h1>
+      <h1 class="text-3xl font-bold">{club.name}</h1>
 
-      <!-- 3) Short description -->
-      {club.short && <p class="text-base text-gray-700">{club.short}</p>}
+      {(club.categories ?? []).length > 0 && (
+        <div class="mt-2 flex flex-wrap gap-2">
+          {(club.categories ?? []).map((cat) => (
+            <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-sm text-gray-700">
+              {cat}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {club.short && (
+        <p class="mt-4 text-gray-600">{club.short}</p>
+      )}
+
 
       <!-- 4) Meeting info -->
       {club.meetings?.length && (

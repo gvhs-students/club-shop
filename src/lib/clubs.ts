@@ -121,6 +121,17 @@ function sortByName<T extends { name: string }>(a: T, b: T) {
   return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
 }
 
+const mdRaw = import.meta.glob("../clubs/*/index.md", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+}) as Record<string, string>;
+
+function stripFrontmatter(md: string): string {
+  // remove initial --- frontmatter block if present
+  return md.replace(/^---[\s\S]*?---\s*/, "");
+}
+
 function resolveCoverUrl(slug: string, fm: Frontmatter | undefined): string {
   // 1. Prefer frontmatter.cover if valid
   if (fm?.cover) {
@@ -176,6 +187,32 @@ function resolveDocUrls(slug: string): string[] {
 }
 
 // ------------------------------- Public API ---------------------------------
+
+export async function getSearchIndex(): Promise<
+  Array<{ slug: string; text: string }>
+> {
+  const items: Array<{ slug: string; text: string }> = [];
+
+  for (const [path, mod] of Object.entries(mdModules)) {
+    const slug = pathToSlug(path);
+    const fm = mod.frontmatter;
+    const raw = mdRaw[path] ?? "";
+    const body = stripFrontmatter(raw);
+
+    const fields = [
+      fm.name ?? "",
+      fm.short ?? "",
+      (fm.categories ?? []).join(" "),
+      body ?? "",
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    items.push({ slug, text: fields });
+  }
+
+  return items;
+}
 
 export async function getClubs(): Promise<ClubCardData[]> {
   const cards: ClubCardData[] = [];

@@ -13,8 +13,9 @@ interface Props {
   title: string;
   short?: string;
   coverSrc?: string;
+  categories?: string[];
 }
-const { href, title, short, coverSrc } = Astro.props as Props;
+const { href, title, short, coverSrc, categories = [] } = Astro.props as Props;
 ---
 
 <a href={href} class="group block focus:outline-none">
@@ -46,14 +47,24 @@ const { href, title, short, coverSrc } = Astro.props as Props;
     <!-- Body -->
     <div class="p-4">
       <!-- Body: allow full wrapping; no truncation -->
-      <h3
-        class="text-base font-semibold tracking-tight text-gray-900 leading-snug"
-      >
+      <h3 class="text-base font-semibold tracking-tight text-gray-900">
         {title}
       </h3>
+      {short && <p class="mt-1 text-sm text-gray-600 line-clamp-2">{short}</p>}
       {
-        short && (
-          <p class="mt-1 text-sm text-gray-600 leading-relaxed">{short}</p>
+        categories.length > 0 && (
+          <div class="mt-3 flex flex-wrap gap-2">
+            {categories.slice(0, 2).map((cat) => (
+              <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs text-gray-700">
+                {cat}
+              </span>
+            ))}
+            {categories.length > 2 && (
+              <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs text-gray-700">
+                +{categories.length - 2}
+              </span>
+            )}
+          </div>
         )
       }
     </div>
