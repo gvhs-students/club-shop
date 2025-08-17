@@ -3,6 +3,7 @@ import "../styles/global.css";
 import SiteHeader from "../components/site-header.astro";
 import ClubCard from "../components/club-card.astro";
 import { getClubs, getSearchIndex } from "../lib/clubs";
+import SiteFooter from "../components/site-footer.astro";
 
 const clubs = await getClubs();
 const searchIndex = await getSearchIndex();
@@ -30,7 +31,7 @@ const searchBySlug = new Map(searchIndex.map((i) => [i.slug, i.text]));
           id="club-search"
           type="search"
           placeholder="Search by name, category, or description..."
-          class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+          class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
 
@@ -60,14 +61,8 @@ const searchBySlug = new Map(searchIndex.map((i) => [i.slug, i.text]));
     </main>
 
     <!-- Footer -->
-    <footer class="mt-12 border-t border-gray-200">
-      <div
-        class="mx-auto text-center max-w-7xl px-4 py-6 text-sm text-gray-600"
-      >
-        © {new Date().getFullYear()} GVHS Students · Independent Student Initiative
-        · Developed by Vlarkus
-      </div>
-    </footer>
+
+    <SiteFooter />
 
     <!-- Client-side filter -->
     <script is:inline>
