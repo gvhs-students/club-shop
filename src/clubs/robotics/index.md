@@ -15,7 +15,7 @@ contacts:
   advisors:
     - name: "Mr. Weist"
       email: "cweist@gvsd.org"
-categories: ["STEM", "Robotics", "Competition"]
+categories: ["STEM", "Math", "Competition", "Volunteering"]
 ---
 
 ## About us

@@ -23,6 +23,9 @@ categories: ["STEM", "Mentorship", "Inclusion"]
 
 ---
 
+# THIS CLUB PAGE IS AN EXAMPLE PAGE ONLY! NO INFORMATION IS RELEVANT TO GVHS FOR RIGHT NOW!
+
+
 **WISE** fosters a welcoming community through mentorship, speaker events, and collaborative STEM projects.
 
 - Panels with industry guests

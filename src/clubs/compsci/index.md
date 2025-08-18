@@ -1,5 +1,5 @@
 ---
-name: "CS Club"
+name: "Computer Science Club"
 short: "Students explore computer science through weekly meetings, annual visits to Lockheed Martin, and participation in hackathons and Olympiads."
 cover: "./cover.jpg"
 meetings:
@@ -14,7 +14,7 @@ contacts:
   advisors:
     - name: "Mr. Ellis"
       email: "mellis@gvsd.org"
-categories: ["STEM", "Hackathon", "Olympiad", "Careers"]
+categories: ["STEM", "Hackathon", "Olympiad", "Math", "Volunteering"]
 ---
 
 The CS Club welcomes all students interested in computer science, whether beginner or experienced.  

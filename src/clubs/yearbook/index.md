@@ -21,6 +21,9 @@ contacts:
 categories: ["Arts", "Design", "Media"]
 ---
 
+# THIS CLUB PAGE IS AN EXAMPLE PAGE ONLY! NO INFORMATION IS RELEVANT TO GVHS FOR RIGHT NOW!
+
+
 The **Yearbook** team covers events, captures photos, and designs layouts. No experience required—photographers, writers, and designers all needed.
 
 [Style guide](./docs/style-guide.pdf)

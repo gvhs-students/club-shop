@@ -18,6 +18,8 @@ contacts:
 categories: ["Culture", "Language"]
 ---
 
+# THIS CLUB PAGE IS AN EXAMPLE PAGE ONLY! NO INFORMATION IS RELEVANT TO GVHS FOR RIGHT NOW!
+
 Join **Spanish Club** for food days, movie nights, and cultural celebrations. All proficiency levels welcome—even beginners.
 
 Activities:

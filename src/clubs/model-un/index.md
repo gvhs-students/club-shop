@@ -23,7 +23,7 @@ contacts:
   officers:
     - name: "Priya Shah"
       role: "Secretary-General"
-categories: ["Humanities", "Debate", "Global Affairs"]
+categories: ["Leadership", "Debate", "Social", "Debate", "History", "Government", "Competition"]
 
 ---
 
