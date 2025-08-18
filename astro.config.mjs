@@ -1,9 +1,8 @@
-// @ts-check
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config'; // ✅ add this
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://gvhs-students.github.io/club-shop',
+  site: 'https://gvhs-students.github.io',
   base: '/club-shop',                                
   trailingSlash: 'never',                             
 
