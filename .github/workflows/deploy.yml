@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-          name: astro-dist # 👈 custom name
+          name: astro-dist
 
   deploy:
     needs: build
@@ -43,4 +43,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: astro-dist # 👈 match the custom name
+          artifact_name: astro-dist
