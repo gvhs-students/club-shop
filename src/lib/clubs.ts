@@ -38,6 +38,7 @@ type Meeting = {
 
 type ClubContacts = {
   email?: string;
+  remind?: string;
   discord?: string;
   instagram?: string;
   website?: string;

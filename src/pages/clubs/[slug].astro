@@ -185,6 +185,9 @@ function fmtTime(hhmm?: string) {
               {club.contacts.club.email && (
                 <li>Email: <a class="underline" href={`mailto:${club.contacts.club.email}`} target="_blank" rel="noopener noreferrer">{club.contacts.club.email}</a></li>
               )}
+              {club.contacts.club.remind && (
+                <li>Remind: <a class="underline" href={`https://instagram.com/${club.contacts.club.remind.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">@{club.contacts.club.remind.replace(/^@/, "")}</a></li>
+              )}
               {club.contacts.club.discord && (
                 <li>Discord: <a class="underline" href={club.contacts.club.discord} target="_blank" rel="noopener noreferrer">Join</a></li>
               )}

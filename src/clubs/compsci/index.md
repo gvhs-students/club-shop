@@ -1,38 +1,27 @@
 ---
-name: "Computer Science Club"
-short: "Learn algorithms, build projects, and prepare for hackathons."
-cover: "./images/cover.jpg"
+name: "CS Club"
+short: "Students explore computer science through weekly meetings, annual visits to Lockheed Martin, and participation in hackathons and Olympiads."
+cover: "./cover.jpg"
 meetings:
-  - days: ["Thu"]
-    start: "15:05"
-    end: "16:30"
-    room: "B305"
+  - days: ["Tue"]
+    start: "14:35"
+    end: "15:15"
+    room: "100"
     frequency: "weekly"
 contacts:
   club:
-    email: "csclub@gvhs.org"
-    instagram: "@example"
-    website: "https://gvhscs.club"
+    email: ""
   advisors:
-    - name: "Ms. Park"
-      email: "park@gvhs.org"
-  officers:
-    - name: "Sam Lee"
-      role: "Lead"
-categories: ["STEM", "Programming", "Hackathons"]
+    - name: "Mr. Ellis"
+      email: "mellis@gvsd.org"
+categories: ["STEM", "Hackathon", "Olympiad", "Careers"]
 ---
 
-We explore **programming**, from web to AI. Bring your laptop and ideas.
+The CS Club welcomes all students interested in computer science, whether beginner or experienced.  
+Members meet weekly to learn and collaborate, and the club provides opportunities beyond the classroom.  
 
-# 1
-## 2
-### 3
-#### 4
+Each fall, the club organizes an **annual trip to Lockheed Martin** during school hours, giving students direct exposure to real-world applications of computer science in industry.  
 
-- Coding challenges
-- Project showcases
-- Hackathon prep
+In addition, CS Club members **volunteer, organize, and compete** at the local **“Hack the Valley” hackathon** hosted at Microsoft’s Malvern Office. The club also encourages participation in various **computer science Olympiads**, helping students challenge themselves and grow their skills.  
 
-![image](./images/image.png)
-
-[Club charter](./docs/charter.pdf)
+Students are free to attend meetings whenever they are able. All are welcome to join.
